@@ -41,6 +41,14 @@ namespace NorthwindWebApiApp
                 c.IncludeXmlComments(xmlPath);
 
             });
+
+            services.AddApiVersioning(
+    options =>
+    {
+        // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
+        options.ReportApiVersions = true;
+    });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
