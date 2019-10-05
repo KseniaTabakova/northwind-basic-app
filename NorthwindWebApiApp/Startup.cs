@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NorthwindWebApiApp.Services;
 //using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace NorthwindWebApiApp
 {
@@ -26,14 +26,10 @@ namespace NorthwindWebApiApp
 #pragma warning disable CA1822
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddScoped<IOrderService, OrderService>();
-            services.Configure<Configuration.NorthwindServiceConfiguration>(this.configuration.GetSection("NorthwindServiceConfiguration"));
-
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo{ Title = "My API", Version = "v1" });
 
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -41,6 +37,10 @@ namespace NorthwindWebApiApp
                 c.IncludeXmlComments(xmlPath);
 
             });
+
+            services.AddControllers();
+            services.AddScoped<IOrderService, OrderService>();
+            services.Configure<Configuration.NorthwindServiceConfiguration>(this.configuration.GetSection("NorthwindServiceConfiguration"));
 
             services.AddApiVersioning(
     options =>

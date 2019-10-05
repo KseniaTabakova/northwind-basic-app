@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NorthwindWebApiApp.Models;
@@ -15,6 +16,7 @@ namespace NorthwindWebApiApp.Controllers
     {
         private readonly IOrderService orderService;
         private readonly ILogger<OrdersController> logger;
+        private readonly IMapper mapper;
         public OrdersController(IOrderService orderService)
         {
             this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
@@ -32,7 +34,8 @@ namespace NorthwindWebApiApp.Controllers
             this.logger.LogInformation("Calling OrdersController.GetOrders");
             try
             {
-                return this.Ok(await this.orderService.GetOrdersAsync());
+                var result = await this.orderService.GetOrdersAsync();
+                return this.Ok(this.mapper.Map<BriefOrderModel[]>(result));
             }
             catch (Exception e)
             {
@@ -41,18 +44,23 @@ namespace NorthwindWebApiApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets an order by ID.
+        /// </summary>
+        /// <param name="orderId">An order ID.</param>
+        /// <returns>A full model.</returns>
         [HttpGet("{orderId}")]
         public async Task<ActionResult<FullOrderModel>> GetOrder(int orderId)
         {
-
             this.logger.LogInformation("Calling OrdersController.GetOrder");
             try
             {
-                return this.Ok(await this.orderService.GetOrderAsync(orderId));
+                var result = await this.orderService.GetOrderAsync(orderId);
+                return this.Ok(this.mapper.Map<FullOrderModel>(result));
             }
             catch (Exception e)
             {
-                this.logger.LogError(e, "Exception in OrdersController.GetOrder.");
+                this.logger.LogError(e, "Exception in OrdersController.GetOrders.");
                 throw;
             }
         }
