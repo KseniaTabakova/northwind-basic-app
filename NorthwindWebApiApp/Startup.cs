@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +9,7 @@ namespace NorthwindWebApiApp
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+#pragma warning disable CA1822
         public void ConfigureServices(IServiceCollection services)
         {
         }
@@ -30,5 +27,6 @@ namespace NorthwindWebApiApp
                 await context.Response.WriteAsync("Hello World!");
             });
         }
+#pragma warning restore CA1822
     }
 }
