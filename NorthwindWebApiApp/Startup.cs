@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using NorthwindWebApiApp.Services;
 //using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace NorthwindWebApiApp
 {
@@ -48,6 +49,13 @@ namespace NorthwindWebApiApp
         // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
         options.ReportApiVersions = true;
     });
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfiles.OrderServiceMappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
         }
 
