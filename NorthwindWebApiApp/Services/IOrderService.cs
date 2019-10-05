@@ -9,5 +9,8 @@ namespace NorthwindWebApiApp.Services
         Task<IEnumerable<BriefOrderModel>> GetOrdersAsync();
 
         Task<FullOrderModel> GetOrderAsync(int orderId);
+
+        Task<IEnumerable<BriefOrderVersion2Model>> GetExtendedOrdersAsync(int orderId);
+
     }
 }
