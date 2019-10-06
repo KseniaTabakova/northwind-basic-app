@@ -17,16 +17,13 @@ namespace NorthwindWebApiApp.Controllers
         private readonly IOrderService orderService;
         private readonly ILogger<OrdersController> logger;
         private readonly IMapper mapper;
-        public OrdersController(IOrderService orderService)
-        {
-            this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
-        }
-        public OrdersController(IOrderService orderService, ILogger<OrdersController> logger)
+        
+        public OrdersController(IOrderService orderService, ILogger<OrdersController> logger, IMapper mapper)
         {
             this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BriefOrderModel>>> GetOrders()
@@ -44,11 +41,7 @@ namespace NorthwindWebApiApp.Controllers
             }
         }
 
-        /// <summary>
-        /// Gets an order by ID.
-        /// </summary>
-        /// <param name="orderId">An order ID.</param>
-        /// <returns>A full model.</returns>
+     
         [HttpGet("{orderId}")]
         public async Task<ActionResult<FullOrderModel>> GetOrder(int orderId)
         {
