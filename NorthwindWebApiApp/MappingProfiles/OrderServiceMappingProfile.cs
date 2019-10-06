@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using NorthwindWebApiApp.Models;
+using NorthwindWebApiApp.Services;
 
 namespace NorthwindWebApiApp.MappingProfiles
 {
@@ -14,6 +14,10 @@ namespace NorthwindWebApiApp.MappingProfiles
             this.CreateMap<BriefOrderDescription, BriefOrderModel>();
             this.CreateMap<BriefOrderVersion2Description, BriefOrderVersion2Model>();
             this.CreateMap<FullOrderDescription, FullOrderModel>();
+<<<<<<< HEAD
         }    
+=======
+        }
+>>>>>>> step8-add-automapper
     }
 }
